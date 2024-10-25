@@ -1,27 +1,45 @@
 import { sql } from '@vercel/postgres';
 import { formatCurrency } from './utils';
 
+// export async function fetchRevenue() {
+//   // Add noStore() here to prevent the response from being cached.
+//   // This is equivalent to in fetch(..., {cache: 'no-store'}).
+
+//   try {
+//     // Artificially delay a response for demo purposes.
+//     // Don't do this in production :)
+
+//     // console.log('Fetching revenue data...');
+//     // await new Promise((resolve) => setTimeout(resolve, 3000));
+
+//     const data = await sql`SELECT * FROM revenue`;
+
+//     // console.log('Data fetch completed after 3 seconds.');
+
+//     return data.rows;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch revenue data.');
+//   }
+// }
+
+
+
 export async function fetchRevenue() {
-  // Add noStore() here to prevent the response from being cached.
-  // This is equivalent to in fetch(..., {cache: 'no-store'}).
-
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
+    // Fetch revenue data from the 'revenue' table. 
+    //I had to fix the order of the month chronologically. Sorry! The alphabetical order bothered me.
+    const { rows } = await sql`SELECT * FROM revenue`;
 
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
-
-    const data = await sql`SELECT * FROM revenue`;
-
-    // console.log('Data fetch completed after 3 seconds.');
-
-    return data.rows;
+    // Return the fetched rows
+    return rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
   }
 }
+
+
 
 export async function fetchLatestInvoices() {
   try {
